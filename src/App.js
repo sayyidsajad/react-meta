@@ -1,46 +1,22 @@
-import { UserProvider, useUser } from "./UserContext";
+import React, { useState } from "react";
 import "./App.css";
 
-const LoggedInUser = () => {
-  const { user } = useUser();
-  return (
-    <p>
-      Hello <span className="Username">{user.name}</span>
-    </p>
-  );
-};
-
-const Header = () => {
-  return (
-    <header>
-      <h2>Blog App</h2>
-      <LoggedInUser />
-    </header>
-  );
-};
-
-const Page = () => {
-  const { user } = useUser();
-  return (
+function App() {
+  const [user, setUser] = useState([]);
+  const fetchData = () => {
+    fetch("https://randomuser.me/api/?results=1")
+      .then((response) => response.json())
+      .then((data) => setUser(data));
+  };
+  React.useEffect(() => fetchData(), []);
+  return Object.keys(user).length > 0 ? (
     <div>
-      <h2>What is Lorem Ipsum</h2>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi odit
-        aliquam consectetur asperiores ducimus eaque tempora fugiat, quos
-        voluptate quas illum! Laborum natus corporis sequi non est repudiandae
-        totam distinctio!
-      </p>
-      <p>Written by: {user.name}</p>
+      <h1>Data returned</h1>
+      <h2>First Name:{user.results[0].name.first}</h2>
+      <h2>First Name:{user.results[0].name.first}</h2>
     </div>
+  ) : (
+    <h1>Data Pending</h1>
   );
-};
-
-const App = () => {
-  return (
-    <UserProvider>
-      <Header />
-      <Page />
-    </UserProvider>
-  );
-};
+}
 export default App;
