@@ -13,7 +13,6 @@ function App() {
     <div>
       <h1>Data returned</h1>
       <h2>First Name:{user.results[0].name.first}</h2>
-      <h2>First Name:{user.results[0].name.first}</h2>
     </div>
   ) : (
     <h1>Data Pending</h1>
